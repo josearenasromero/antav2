@@ -1,0 +1,14 @@
+{
+  "name": "antaminav2",
+  "app_id": "3e5dea26",
+  "type": "ionic1",
+  "integrations": {
+    "gulp": {}
+  },
+  "watchPatterns": [
+    "scss/**/*",
+    "www/**/*",
+    "!www/lib/**/*",
+    "!www/**/*.map"
+  ]
+}

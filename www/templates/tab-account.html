@@ -1,9 +1,16 @@
-<ion-view view-title="Account">
+<ion-view view-title="Rutas">
   <ion-content>
     <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="route in routes" type="item-text-wrap" href="#/tab/routes/{{route.id}}">
+        <img ng-src="{{route.face}}">
+        <h2>{{route.name}}</h2>
+        <p>{{route.archive}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+        <ion-option-button class="button-assertive" ng-click="remove(route)">
+          Borrar
+        </ion-option-button>
+      </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>

@@ -14,83 +14,83 @@
 		<div class="list">
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Empresa</span>
-			<input type="text" value="ANTAMINA">
+			<input type="text" value="" ng-model="report.business">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Base</span>
-			<input type="text" value="CONTROL CASABLANCA">
+			<input type="text" value="" ng-model="report.base">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Informe N°</span>
-			<input type="text" value="2018 06 01 SVC 002">
+			<input type="text" value="" ng-model="report.correlative">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Fecha del Evento</span>
-			<input type="text" value="01/06/2018">
+			<input type="text" value="01/06/2018" ng-model="report.event_date">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Reportante</span>
-			<input type="text" value="PENAGOS VASQUEZ PEDRO">
+			<input type="text" value="" ng-model="report.reportant">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Hora del Evento</span>
-			<input type="text" value="13:50">
+			<input type="text" value="" ng-model="report.event_time">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Lugar de Ocurrencia</span>
-			<input type="text" value="PUESTO CONTROL CASABLANCA">
+			<input type="text" value="" ng-model="report.ocurrency">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Kilómetro</span>
-			<input type="text" value="9">
+			<input type="text" value="" ng-model="report.kilometer">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Actividad</span>
-			<input type="text" value="TRANSITO BAJADA VACIO">
+			<input type="text" value="" ng-model="report.activity">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Tipo de Unidad</span>
-			<input type="text" value="CAMION GRUA">
+			<input type="text" value="" ng-model="report.unit">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Operador de Contrato</span>
-			<input type="text" value="Edgar Portocarrero">
+			<input type="text" value="" ng-model="report.operator">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Tipo de Observación</span>
-			<input type="text" value="UNIDAD">
+			<input type="text" value="" ng-model="report.observation">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Tipo de Criticidad</span>
-			<input type="text" value="NC-21 Conducir un vehículo que no cuente con certificado">
+			<input type="text" value="" ng-model="report.criticity">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Gerencia</span>
-			<input type="text" value="MANTENIMIENTO">
+			<input type="text" value="" ng-model="report.management">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Nombre del Conductor</span>
-			<input type="text" value="Incio Rojas Pedro">
+			<input type="text" value="" ng-model="report.driver_name">
 		  </label>
 		  <label class="item item-input item-stacked-label">
 			<span class="input-label">Estado</span>
-			<input type="text" value="Pendiente">
+			<input type="text" value="" ng-model="report.status">
 		  </label>
 		  <label class="item item-input">
 			<span class="input-label">Acto y/o Condición Sub Estándar</span>
-			<textarea>No cuenta con Revisión Técnica Vehicular ya que es del año de fabricación 2011.                                              La unidad no cuenta con cinta retrorreflectiva en el parachoque posterior.                                      Neblineros mal posicionados.</textarea>
+			<textarea>{{report.act}}</textarea>
 		  </label>
 		  <label class="item item-input">
 			<span class="input-label">Acciones Correctivas (sugeridas)</span>
-			<textarea>Se comunica la observación al conductor, se le da una charla correspondiente. Continúa tránsito a VS3, 15:15 hrs.</textarea>
+			<textarea>{{report.action_second}}</textarea>
 		  </label>
 		  <label class="item item-input">
 			<span class="input-label">Recomendación</span>
-			<textarea>Cumplir con el Reglamento Nacional de vehículos DS-058-2003-MTC / Anexo III, 1. Dispositivos de alumbrado y señalización óptica, Categoría My N - Luz neblinera delantera (10).                            //Anexo III, 10. Láminas retroreflectivas.</textarea>
+			<textarea>{{report.reference}}</textarea>
 		  </label>
 		  <label class="item item-input">
 			<span class="input-label">Place de Unidad</span>
-			<textarea>B9J-726</textarea>
+			<textarea>{{report.vehicle_plate}}</textarea>
 		  </label>
 		</div>
 	  </div>

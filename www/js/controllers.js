@@ -30,23 +30,21 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+.controller('ChatsCtrl', function($scope, $http) {
+	$scope.chats = [];
+  
+	$http.get("http://antaminaseguridadvial.org/service.php?method=get_all_reports").then(function(result){
+		$scope.chats = result.data.data;
+		console.log(result.data.data);
+	});
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('ChatDetailCtrl', function($scope, $stateParams, $http) {
+	$scope.report;
+	$http.get("http://antaminaseguridadvial.org/service.php?method=get_report", {params: { id:$stateParams.chatId }}).then(function(result){
+		$scope.report = result.data.data;
+		console.log(result.data.data);
+	});
 })
 
 .controller('AccountCtrl', function($scope, Routes) {

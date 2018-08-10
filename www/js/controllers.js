@@ -1,5 +1,11 @@
 angular.module('starter.controllers', [])
 
+.controller('LoginCtrl', function($scope, $location) {
+	$scope.doLogin = function() {
+		$location.path("/tabs/dash");
+	}
+})
+
 .controller('DashCtrl', function($scope) {
 
 })

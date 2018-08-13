@@ -4,6 +4,8 @@ angular.module('starter.controllers', [])
 	$scope.doLogin = function() {
 		$location.path("/tabs/dash");
 	}
+	
+	$scope.local = {user:'', password:''};
 })
 
 .controller('DashCtrl', function($scope) {

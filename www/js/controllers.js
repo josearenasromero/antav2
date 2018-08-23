@@ -115,9 +115,11 @@ angular.module('starter.controllers', [])
     navigator.geolocation.getCurrentPosition(function (pos) {
       console.log('Got pos', pos);
       $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+	  $scope.map.setZoom(20);
       $ionicLoading.hide();
     }, function (error) {
-      alert('No es posible obtener la posición actual: ' + error.message);
+		$ionicLoading.hide();
+		alert('No es posible obtener la posición actual: ' + error.message);
     });
   };
 })

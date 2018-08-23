@@ -38,6 +38,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     controller: 'LoginCtrl'          
   })  
   
+  .state('logout', {
+    url: '/logout',
+    templateUrl: 'templates/logout.html',
+    controller: 'LogoutCtrl'          
+  })  
+  
   // setup an abstract state for the tabs directive
     .state('tab', {
     url: '/tab',
@@ -87,6 +93,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+   
   .state('tab.route-detail', {
     url: '/routes/:routeId',
     views: {

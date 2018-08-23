@@ -1,13 +1,23 @@
-<ion-view view-title="Login">
+<ion-view view-title="Iniciar Sesión" hide-nav-bar="true">
     <ion-content>
-		<div class="text-center">
+		<div class="text-center" style="margin-top:20px">
 			<label class="text-center">
 				<img src="img/logo.gif">
 			</label>
 		</div>
-			asdasdasdas
         <form class="list">
-            
+            <ion-list>
+                <label class="item item-input" name="user_user">
+                    <span class="input-label">Usuario</span>
+                    <input type="text" ng-model="local.user" id="user">
+                </label>
+                <label class="item item-input" name="user_password">
+                    <span class="input-label">Contraseña</span>
+                    <input type="password" ng-model="local.password" id="password" placeholder="">
+                </label>
+            </ion-list>
+			<p ng-show="local.elogin" style="color:red;font-weight:bold;text-align:center;margin-top:10px;">Error al iniciar sesión</p>
+            <a id="perfil-button4" class="button button-stable  button-block" ng-click="doLogin()">Iniciar Sesión</a>			
         </form>	
     </ion-content>
 </ion-view>

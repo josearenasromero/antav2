@@ -5,7 +5,7 @@
 		Bienvenido a la APP Safety GIS
 	  </div>
 	  <div class="item item-text-wrap">
-		¡Bienvenido Frank!
+		¡Bienvenido {{local.user}}!
 	  </div>
 	</div>
 	<div class="card">
@@ -15,19 +15,15 @@
 	  <div class="item item-text-wrap">
 		<div class="list">
 
-		  <a class="item item-icon-left" href="#">
+		  <a class="item item-icon-left" href="#/tab/dash">
 			<i class="icon ion-email"></i>
-			frank.altamirano@gmail.com
+			{{local.email}}
 		  </a>
 
-		  <a class="item item-icon-left" href="#">
-			<i class="icon ion-ios-telephone-outline"></i>
-			984 234 658
-		  </a>
-		  <a class="item item-icon-left" href="#">
+		  <a class="item item-icon-left" href="#/tab/dash">
 			<i class="icon ion-person-stalker"></i>
-			Empresa ANTAMINA
-			<span class="badge badge-assertive">10</span>
+			Empresa <b>{{local.business_name}}</b>
+			<span class="badge badge-assertive" ng-show="local.report_count > -1">{{local.report_count}}</span>
 		  </a>
 
 		</div>

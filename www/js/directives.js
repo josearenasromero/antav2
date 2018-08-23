@@ -10,12 +10,14 @@ angular.module('starter.directives', [])
       function initialize() {
         var mapOptions = {
           center: new google.maps.LatLng(-9.85761,-76.880577),
-          zoom: 16,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.SATELLITE
         };
         var map = new google.maps.Map($element[0], mapOptions);
         $scope.onCreate({map: map});
-
+		kml = new google.maps.KmlLayer('http://antaminaseguridadvial.org/visor/andachupa_tictirumi/Ruta/doc.kml');
+		kml.setOptions({preserveViewport:true});
+		kml.setMap(map)
         // Stop the side bar from dragging when mousedown/tapdown on the map
         google.maps.event.addDomListener($element[0], 'mousedown', function (e) {
           e.preventDefault();

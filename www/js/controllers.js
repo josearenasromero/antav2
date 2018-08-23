@@ -1,21 +1,105 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, $location) {
-	$scope.doLogin = function() {
-		$location.path("/tabs/dash");
-	}
-	
-	$scope.local = {user:'', password:''};
+.controller('MainCtrl', function($scope, $location, $localForage, $http) {
+	$scope.filter = {gps:true, ruta:true, riesgo:true};
 })
 
-.controller('DashCtrl', function($scope) {
+.controller('LogoutCtrl', function($scope, $location, $localForage, $http) {
+	$scope.local = {user:'', password:'', email:'', business_id:'', user_id:'', elogin:false};
+	$localForage.clear().then(function(){
+		console.log("all data removed");
+		$location.path("/login");
+	});
+})
 
+.controller('LoginCtrl', function($scope, $location, $localForage, $http) {
+	$scope.local = {user:'', password:'', email:'', business_id:'', user_id:'', elogin:false};
+	
+	$localForage.getItem('localBusinessId').then(function(data) {
+		console.log("localForage recovered businessid...", data);
+		if(data != null && data != "") {
+			$location.path("/tab/dash");
+		}
+	});
+	
+	$scope.doLogin = function() {
+		$http.get("http://antaminaseguridadvial.org/service.php?method=do_login", {params: {username:$scope.local.user,password:$scope.local.password}}).then(function(result) {
+			console.log("result from login", result);
+			if(result.data.status == "ok") {
+				$scope.local.elogin  = false;
+				$scope.local.email = result.data.data.email;
+				$scope.local.business_id = result.data.data.business_id;
+				$scope.local.user_id = result.data.data.id;
+				
+				console.log($scope.local.email, $scope.local.business_id, "---");
+				
+				$localForage.setItem('localBusinessId', $scope.local.business_id).then(function(data) {
+					$localForage.setItem('localEmail', $scope.local.email).then(function(da) {
+						$localForage.setItem('localUser', $scope.local.user).then(function(d) {
+							$localForage.setItem('localUserId', $scope.local.user_id).then(function(dd) {
+								console.log("logged");
+								$location.path("/tab/dash");
+								$scope.$apply();
+							});
+						});
+					});
+				});
+			} else {
+				$scope.local.elogin  = true;
+			}	
+		});
+	}
+})
+
+.controller('NavCtrl', function($scope, $ionicSideMenuDelegate) {
+	$scope.showMenu = function () {
+		$ionicSideMenuDelegate.toggleLeft();
+	};
+	$scope.showRightMenu = function () {
+		$ionicSideMenuDelegate.toggleRight();
+	};
+})
+
+.controller('DashCtrl', function($scope, $localForage, $http, $location) {
+	$scope.local = {user:'', password:'', email:'', business_id:'', business_name:'', report_count:-1};
+	
+	$localForage.getItem('localBusinessId').then(function(data) {
+		console.log("localForage recovered businessid...", data);
+		if(data != null && data != "") {
+		} else {
+			$location.path("/login");
+		}	
+	});
+	
+	$localForage.getItem('localBusinessId').then(function(data) {
+		$scope.local.business_id = data;
+		console.log("localForage recovered businessid...", data);
+		
+		$http.get("http://antaminaseguridadvial.org/service.php?method=get_dash_info", {params: {business_id:$scope.local.business_id}}).then(function(result) {
+			if(result.data.status == "ok") {
+				$scope.local.business_name  = result.data.data.name;
+				$scope.local.report_count = result.data.data.report_count;
+			} else {
+				
+			}	
+		});
+	});
+	$localForage.getItem('localEmail').then(function(data) {
+		$scope.local.email = data;
+		console.log("localForage recovered localEmail...", data);
+	});
+	$localForage.getItem('localUser').then(function(data) {
+		$scope.local.user = data;
+		console.log("localForage recovered localUser...", data);
+	});
 })
 
 .controller('RouteDetailCtrl', function($scope, $ionicLoading) {
+	//$scope.filter = {gps:true, ruta:false, riesgo:true};
+	
 	$scope.mapCreated = function(map) {
-    $scope.map = map;
-  };
+		$scope.map = map;
+	};
 
   $scope.centerOnMe = function () {
     console.log("Centering");
@@ -31,20 +115,41 @@ angular.module('starter.controllers', [])
     navigator.geolocation.getCurrentPosition(function (pos) {
       console.log('Got pos', pos);
       $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-      $scope.loading.hide();
+      $ionicLoading.hide();
     }, function (error) {
       alert('No es posible obtener la posición actual: ' + error.message);
     });
   };
 })
 
-.controller('ChatsCtrl', function($scope, $http) {
-	$scope.chats = [];
-  
-	$http.get("http://antaminaseguridadvial.org/service.php?method=get_all_reports").then(function(result){
-		$scope.chats = result.data.data;
-		console.log(result.data.data);
+.controller('ChatsCtrl', function($scope, $localForage, $http, $location) {
+	$scope.local = {user:'', password:'', email:'', business_id:'', business_name:'', user_id:'', report_count:-1};
+	
+	$localForage.getItem('localBusinessId').then(function(data) {
+		console.log("localForage recovered businessid...", data);
+		if(data != null && data != "") {
+		} else {
+			$location.path("/login");
+		}	
 	});
+	
+	$localForage.getItem('localBusinessId').then(function(data) {
+		$scope.local.business_id = data;
+		$localForage.getItem('localUserId').then(function(dd) {
+			$scope.local.user_id = dd;
+			console.log("localForage recovered userid...", data, dd);
+			
+			$http.get("http://antaminaseguridadvial.org/service.php?method=get_all_reports", {params: {business_id:$scope.local.business_id, user_id:$scope.local.user_id}}).then(function(result){
+				if(result.data.status == "ok") {
+					$scope.chats = result.data.data;
+				} else {
+					
+				}	
+			});
+		});
+	});
+	
+	$scope.chats = [];
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, $http) {

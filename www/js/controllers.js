@@ -60,8 +60,15 @@ angular.module('starter.controllers', [])
 	};
 })
 
-.controller('DashCtrl', function($scope, $localForage, $http, $location) {
-	$scope.local = {user:'', password:'', email:'', business_id:'', business_name:'', report_count:-1};
+.controller('DashCtrl', function($scope, $localForage, $http, $location, $ionicLoading) {
+	$scope.local = {user:'', password:'', email:'', business_id:'', business_name:'', user_id:'', report_count:-1};
+	
+	$scope.doLogout = function() {
+		$localForage.clear().then(function(){
+			console.log("all data removed");
+			$location.path("/login");
+		});
+	}
 	
 	$localForage.getItem('localBusinessId').then(function(data) {
 		console.log("localForage recovered businessid...", data);
@@ -72,16 +79,25 @@ angular.module('starter.controllers', [])
 	});
 	
 	$localForage.getItem('localBusinessId').then(function(data) {
-		$scope.local.business_id = data;
-		console.log("localForage recovered businessid...", data);
-		
-		$http.get("http://antaminaseguridadvial.org/service.php?method=get_dash_info", {params: {business_id:$scope.local.business_id}}).then(function(result) {
-			if(result.data.status == "ok") {
-				$scope.local.business_name  = result.data.data.name;
-				$scope.local.report_count = result.data.data.report_count;
-			} else {
-				
-			}	
+		$localForage.getItem('localUserId').then(function(dd) {
+			$scope.loading = $ionicLoading.show({
+			  content: 'Obteniendo información...',
+			  showBackdrop: true
+			});
+			
+			$scope.local.business_id = data;
+			$scope.local.user_id = dd;
+			console.log("localForage recovered businessid...", data);
+			
+			$http.get("http://antaminaseguridadvial.org/service.php?method=get_dash_info", {params: {business_id:$scope.local.business_id, user_id:$scope.local.user_id}}).then(function(result) {
+				if(result.data.status == "ok") {
+					$scope.local.business_name  = result.data.data.name;
+					$scope.local.report_count = result.data.data.report_count;
+				} else {
+					
+				}
+				$ionicLoading.hide();
+			});
 		});
 	});
 	$localForage.getItem('localEmail').then(function(data) {
@@ -124,9 +140,9 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ChatsCtrl', function($scope, $localForage, $http, $location) {
+.controller('ChatsCtrl', function($scope, $localForage, $http, $location, $ionicLoading) {
 	$scope.local = {user:'', password:'', email:'', business_id:'', business_name:'', user_id:'', report_count:-1};
-	
+	$scope.search = "";
 	$localForage.getItem('localBusinessId').then(function(data) {
 		console.log("localForage recovered businessid...", data);
 		if(data != null && data != "") {
@@ -136,6 +152,11 @@ angular.module('starter.controllers', [])
 	});
 	
 	$localForage.getItem('localBusinessId').then(function(data) {
+		$scope.loading = $ionicLoading.show({
+		  content: 'Obteniendo reportes...',
+		  showBackdrop: true
+		});
+		
 		$scope.local.business_id = data;
 		$localForage.getItem('localUserId').then(function(dd) {
 			$scope.local.user_id = dd;
@@ -146,7 +167,8 @@ angular.module('starter.controllers', [])
 					$scope.chats = result.data.data;
 				} else {
 					
-				}	
+				}
+				$ionicLoading.hide();
 			});
 		});
 	});

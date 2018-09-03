@@ -1,0 +1,112 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="Nuevo Reporte">
+  <ion-content class="padding">
+	<div class="card">
+	  <div class="item item-divider">
+		Información del Reporte
+	  </div>
+	  <div class="item item-text-wrap">
+		<div class="list">
+		  <label class="item item-input item-select">
+			<span class="input-label">Empresa</span>
+			<select ng-model="report.business_id" ng-options="x.id as x.name for x in lists.businesses">
+			</select>
+		  </label>
+		  <label class="item item-input item-select">
+			<span class="input-label">Base</span>
+			<select ng-model="report.base_id" ng-change="createInformNumber()" ng-options="x.id as x.name for x in lists.bases">
+			</select>
+		  </label>
+		  <label class="item item-input item-stacked-label">
+			<span class="input-label">Informe N°</span>
+			<input type="text" ng-model="report.correlative">
+		  </label>
+		  <label class="item item-input item-stacked-label">
+			<span class="input-label">Fecha del Evento</span>
+			<input type="date" ng-model="report.event_date">
+		  </label>
+		  <label class="item item-input item-select">
+			<span class="input-label">Reportante</span>
+			<select ng-model="report.reportant_id" ng-options="x.id as x.name for x in lists.reportants">
+			</select>
+		  </label>
+		  <label class="item item-input item-stacked-label">
+			<span class="input-label">Hora del Evento</span>
+			<input type="time" ng-model="report.event_time">
+		  </label>
+		  <label class="item item-input item-select">
+			<span class="input-label">Ocurrencia</span>
+			<select ng-model="report.ocurrency_id" ng-options="x.id as x.name for x in lists.ocurrencies">
+			</select>
+		  </label>
+		  <label class="item item-input item-stacked-label">
+			<span class="input-label">Kilómetro</span>
+			<input type="number" ng-model="report.kilometer">
+		  </label>
+		  <label class="item item-input item-select">
+			<span class="input-label">Actividad</span>
+			<select ng-model="report.activity_id" ng-options="x.id as x.name for x in lists.activities">
+			</select>
+		  </label>
+		  <label class="item item-input item-select">
+			<span class="input-label">Unidad</span>
+			<select ng-model="report.unit_id" ng-options="x.id as x.name for x in lists.units">
+			</select>
+		  </label>
+		  <label class="item item-input item-stacked-label">
+			<span class="input-label">Operador de Contrato</span>
+			<input type="text" ng-model="report.operator">
+		  </label>
+		  <label class="item item-input item-select">
+			<span class="input-label">Observación</span>
+			<select ng-model="report.observation_id" ng-options="x.id as x.name for x in lists.observations">
+			</select>
+		  </label>
+		  <label class="item item-input item-select">
+			<span class="input-label">Criticidad</span>
+			<select ng-model="report.criticity_id" ng-options="x.id as x.pretty_name for x in lists.criticities">
+			</select>
+		  </label>
+		  <label class="item item-input item-select">
+			<span class="input-label">Gerencia</span>
+			<select ng-model="report.management_id" ng-options="x.id as x.name for x in lists.managements">
+			</select>
+		  </label>
+		  <label class="item item-input item-stacked-label">
+			<span class="input-label">Nombre del Conductor</span>
+			<input type="text" ng-model="report.driver_name">
+		  </label>
+		  <label class="item item-input item-select">
+			<span class="input-label">Estado</span>
+			<select ng-model="report.status" ng-options="x.id as x.name for x in lists.statuses">
+			</select>
+		  </label>
+		  <label class="item item-input">
+			<span class="input-label">Acto y/o Condición Sub Estándar</span>
+			<textarea ng-model="report.act"></textarea>
+		  </label>
+		  <label class="item item-input">
+			<span class="input-label">Acciones Correctivas (sugeridas)</span>
+			<textarea ng-model="report.action_second"></textarea>
+		  </label>
+		  <label class="item item-input">
+			<span class="input-label">Recomendación</span>
+			<textarea ng-model="report.reference"></textarea>
+		  </label>
+		  <label class="item item-input">
+			<span class="input-label">Place de Unidad</span>
+			<textarea ng-model="report.vehicle_plate"></textarea>
+		  </label>
+		</div>
+	  </div>
+	</div>
+	<button class="button button-full button-positive">
+	  Guardar
+	</button>
+  </ion-content>
+</ion-view>

@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.appsafetygits" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.ionic.appsafetygits" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Safety GIS</name>
     <description>App Safety GIS</description>
     <author email="hi@ionicframework" href="http://www.antaminaseguridadvial.org/">Antamina Seguridad Vial</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.1.2:8111" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -84,5 +84,7 @@
     <allow-navigation href="http://192.168.1.2:8100" />
     <allow-navigation href="http://192.168.1.2:8101" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
+    <allow-navigation href="http://192.168.1.2:8109" />
+    <allow-navigation href="http://192.168.1.2:8111" />
     <engine name="android" spec="7.0.0" />
 </widget>

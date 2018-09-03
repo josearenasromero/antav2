@@ -173,7 +173,51 @@ angular.module('starter.controllers', [])
 		});
 	});
 	
+	$scope.newReport = function() {
+		$location.path("/tab/new/report");
+	};
+	
 	$scope.chats = [];
+})
+
+.controller('ChatNewCtrl', function($scope, $stateParams, $http, $localForage, $ionicLoading) {
+	$scope.local = {user_id:''};
+	$scope.lists = {};
+	
+	$scope.report = {id:'', business_id:'', status:'Pendiente'};
+	
+	$scope.createInformNumber = function(){
+		$http.get("http://antaminaseguridadvial.org/service.php?method=create_inform_number", {params: { base_id:$scope.report.base_id }}).then(function(result){
+			if(result.data.status == "ok") {
+				$scope.report.correlative = result.data.data;
+				console.log($scope.report.correlative, "-- correlativo");
+			} else {
+				
+			}
+		});
+	}
+	
+	$localForage.getItem('localUserId').then(function(dd) {
+		$scope.loading = $ionicLoading.show({
+		  content: 'Obteniendo data...',
+		  showBackdrop: true
+		});
+		
+		$scope.local.user_id = dd;
+		$http.get("http://antaminaseguridadvial.org/service.php?method=get_data_for_new_report", {params: { user_id:$scope.local.user_id }}).then(function(result){
+			if(result.data.status == "ok") {
+				$scope.lists = result.data.data;
+				console.log($scope.lists, "--listas");
+				
+				$localForage.getItem('localBusinessId').then(function(d) {
+					$scope.report.business_id = d;
+				});
+			} else {
+				
+			}
+			$ionicLoading.hide();
+		});
+	});
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, $http) {

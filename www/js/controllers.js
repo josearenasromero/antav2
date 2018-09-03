@@ -180,7 +180,7 @@ angular.module('starter.controllers', [])
 	$scope.chats = [];
 })
 
-.controller('ChatNewCtrl', function($scope, $stateParams, $http, $localForage, $ionicLoading) {
+.controller('ChatNewCtrl', function($scope, $stateParams, $http, $localForage, $ionicLoading, $timeout, $location) {
 	$scope.local = {user_id:''};
 	$scope.lists = {};
 	
@@ -218,6 +218,21 @@ angular.module('starter.controllers', [])
 			$ionicLoading.hide();
 		});
 	});
+	
+	$scope.createReport = function() {
+		$http.post("http://antaminaseguridadvial.org/service.php?method=create_report", $scope.report).then(function(result){
+			console.log(result);
+			if(result.data.status == "ok") {
+				$ionicLoading.show({ template: 'Reporte creado', noBackdrop: false, duration: 3000 });
+				$timeout(function(){
+					$location.path("/tab/chats");
+				}, 2500);
+			} else {
+				$ionicLoading.show({ template: 'Error al crear reporte. Falta ingresar información', noBackdrop: false, duration: 3000 });
+			}
+		});
+	};
+	
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, $http) {
